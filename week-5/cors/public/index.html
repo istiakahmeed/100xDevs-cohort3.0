@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.6/axios.min.js"></script>
+  </head>
+
+  <body>
+    <div id="posts">
+      <input id="a" type="number" placeholder="Enter first number" />
+      <input id="b" type="number" placeholder="Enter second number" />
+      <button onclick="clickMe()">click me</button>
+      <p id="result"></p>
+    </div>
+    <script>
+      async function clickMe() {
+        const a = parseInt(document.getElementById("a").value);
+        const b = parseInt(document.getElementById("b").value);
+        const el = document.getElementById("result");
+
+        // Basic validation
+        if (isNaN(a) || isNaN(b)) {
+          el.textContent = "Please enter valid numbers for both inputs.";
+          return;
+        }
+
+        try {
+          // Fetching data from the backend
+          const res = await axios.get(
+            `http://localhost:3000/sum?a=${a}&b=${b}`
+          );
+          const data = res.data;
+
+          // Display the actual data from JSON response
+          el.innerHTML = `<p>Sum: ${data.ans}</p>`;
+          console.log(data); // Optional: log the entire data to console
+        } catch (error) {
+          el.textContent = "Error fetching data. Please try again.";
+          console.error("Error fetching data:", error);
+        }
+      }
+    </script>
+  </body>
+</html>
