@@ -5,9 +5,7 @@ const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
-mongoose.connect(
-  "mongodb+srv://jerryahmed:GEeRuaadIybNVDBc@cluster0.o5qkc.mongodb.net/todo-app"
-);
+mongoose.connect("");
 
 const app = express();
 app.use(express.json());
