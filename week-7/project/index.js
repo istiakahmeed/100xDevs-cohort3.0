@@ -3,6 +3,7 @@ const { UserModel, TodoModel } = require("./db");
 const { auth, JWT_SECRET } = require("./auth");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 mongoose.connect(
   "mongodb+srv://jerryahmed:GEeRuaadIybNVDBc@cluster0.o5qkc.mongodb.net/todo-app"
@@ -16,9 +17,11 @@ app.post("/signup", async function (req, res) {
   const password = req.body.password;
   const name = req.body.name;
 
+  const hasedPassword = await bcrypt.hash(password, 10);
+
   await UserModel.create({
     email: email,
-    password: password,
+    password: hasedPassword,
     name: name,
   });
 
@@ -33,10 +36,11 @@ app.post("/signin", async function (req, res) {
 
   const response = await UserModel.findOne({
     email: email,
-    password: password,
   });
 
-  if (response) {
+  const passwordMatch = bcrypt.compare(password, response.password);
+
+  if (response && passwordMatch) {
     const token = jwt.sign(
       {
         id: response._id.toString(),
