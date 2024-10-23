@@ -36,3 +36,16 @@ const UserList = () => {
 };
 
 export default UserList;
+
+// Before we understand `useEffect` , let’s understand what are `Side effects`.
+
+// ## Side effects
+
+// Side effects are operations that interact with the outside world or have effects beyond the component's rendering. Examples include:
+
+// - **Fetching data** from an API.
+// - **Modifying the DOM** manually.
+// - **Subscribing to events** (like WebSocket connections, timers, or browser events).
+// - **Starting a clock**
+
+// These are called side effects because they don't just compute output based on the input—they affect things outside the component itself.
